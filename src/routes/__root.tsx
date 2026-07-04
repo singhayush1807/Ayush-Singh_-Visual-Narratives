@@ -91,7 +91,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Gaming, geopolitics and cinematic short-form editing. Portfolio, work and contact.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/og.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Ayush Singh — Video Editor & Motion Designer" },
+      {
+        name: "twitter:description",
+        content:
+          "Gaming, geopolitics and cinematic short-form editing. Portfolio, work and contact.",
+      },
+      { name: "twitter:image", content: "/og.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
