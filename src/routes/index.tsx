@@ -145,47 +145,6 @@ function AnimatedSection({
     if (inView) setIsVisible(true);
   }, [inView]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const checkVisibility = () => {
-      const el = ref.current;
-      if (!el) return;
-
-      const rect = el.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
-      const threshold = Math.max(1, Math.min(rect.height * 0.1, viewportHeight * 0.1));
-      const hashTargeted = !!id && window.location.hash === `#${id}`;
-
-      if ((rect.bottom > 0 && rect.top < viewportHeight && visibleHeight >= threshold) || hashTargeted) {
-        setIsVisible(true);
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 },
-    );
-
-    const el = ref.current;
-    if (el) observer.observe(el);
-
-    const frame = window.requestAnimationFrame(checkVisibility);
-    const onHashChange = () => window.requestAnimationFrame(checkVisibility);
-    window.addEventListener("hashchange", onHashChange);
-    window.addEventListener("resize", checkVisibility);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      observer.disconnect();
-      window.removeEventListener("hashchange", onHashChange);
-      window.removeEventListener("resize", checkVisibility);
-    };
-  }, [id]);
-
   return (
     <motion.section
       ref={ref}
@@ -634,8 +593,7 @@ function Work() {
         </Reveal>
 
         {/* Grid — masonry-ish via CSS columns for shorts, grid for long-form */}
-        <motion.div
-          layout
+        <div
           data-work-grid
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6"
         >
@@ -654,7 +612,7 @@ function Work() {
               );
             })}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {hasMoreVideos && (
           <div className="mt-12 flex justify-center">

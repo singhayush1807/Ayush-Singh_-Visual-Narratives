@@ -81,11 +81,9 @@ export function VideoCard({
   return (
     <motion.div
       ref={cardRef}
-      layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 16, scale: 0.97 }}
-      whileHover={play ? undefined : { scale: 1.018 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       role={play ? undefined : "button"}
       data-video-card
@@ -94,7 +92,7 @@ export function VideoCard({
       onClick={play ? undefined : startPlayback}
       onKeyDown={onKeyDown}
       className={cn(
-        "group relative paper-card overflow-hidden cursor-pointer hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_var(--forest)] transition-all",
+        "group relative paper-card overflow-hidden cursor-pointer will-change-transform transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_var(--forest)]",
         isShort ? "aspect-[9/16]" : "aspect-video",
         play && "cursor-default",
         className,
@@ -123,7 +121,7 @@ export function VideoCard({
               onLoad={() => setImageLoaded(true)}
               onError={handleImageError}
               className={cn(
-                "absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105",
+                "absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-700 group-hover:scale-105",
                 imageLoaded ? "opacity-100" : "opacity-0",
               )}
             />
